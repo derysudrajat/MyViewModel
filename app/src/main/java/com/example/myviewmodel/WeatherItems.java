@@ -1,8 +1,12 @@
 package com.example.myviewmodel;
 
+import android.util.Log;
+
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class WeatherItems {
     private int id;
@@ -13,20 +17,18 @@ public class WeatherItems {
 
     WeatherItems(JSONObject object) {
         try {
-            int id = object.getInt("id");
-            String name = object.getString("name");
-            String currentWeather = object.getJSONArray("weather").getJSONObject(0).getString("main");
-            String description = object.getJSONArray("weather").getJSONObject(0).getString("description");
-            double tempInKelvin = object.getJSONObject("main").getDouble("temp");
-            double tempInCelsius = tempInKelvin - 273;
-            String temperature = new DecimalFormat("##.##").format(tempInCelsius);
+            String mTitle = object.getString("title");
+            String mReleaseDate = object.getString("release_date");
+            String mOverview = object.getString("overview");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date mDate = formatter.parse(mReleaseDate);
+            formatter = new SimpleDateFormat("dd MMM yyyy");
+            String strDate = formatter.format(mDate);
 
-
-            this.id = id;
-            this.name = name;
+            this.name = mTitle;
             this.currentWeather = currentWeather;
-            this.description = description;
-            this.temperature = temperature;
+            this.description = mOverview;
+            this.temperature = strDate;
         } catch (Exception e) {
             e.printStackTrace();
         }

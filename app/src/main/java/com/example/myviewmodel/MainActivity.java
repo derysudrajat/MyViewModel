@@ -35,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        edtCity = findViewById(R.id.editCity);
+
         progressBar = findViewById(R.id.progressBar);
 
-        findViewById(R.id.btnCity).setOnClickListener(myListener);
+        showData();
     }
 
     private Observer<ArrayList<WeatherItems>> getWeather = new Observer<ArrayList<WeatherItems>>() {
@@ -51,17 +51,10 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener myListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            String city = edtCity.getText().toString();
-
-            if (TextUtils.isEmpty(city)) return;
-
-            mainViewModel.setWeather(city);
-            showLoading(true);
-        }
-    };
+    private void showData(){
+        mainViewModel.setWeather();
+        showLoading(true);
+    }
 
     private void showLoading(Boolean state) {
         if (state) {
